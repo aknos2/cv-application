@@ -1,0 +1,79 @@
+:root {
+    --button-background-color: rgb(87, 133, 198);
+    --button-font-color: white;
+}
+
+button {
+    margin-top: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+textarea {
+    max-width: 100%;
+    width: 100%;
+    height: 100px;
+}
+
+.body-form {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+  
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    gap: 30px;
+}
+
+.body-form p {
+    padding: 15px;
+    margin-bottom: -30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.fill {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    width: 100%; 
+}
+
+.fill label {
+    white-space: nowrap; /* Prevent labels from wrapping */
+}
+
+.fill input {
+    flex: 1; /* Allows the input to take up remaining space */
+    width: 100%; /* Ensures input fills available space */
+    padding: 2px; /* Adds spacing inside input */
+    font-size: 16px;
+}
+
+.fill.duties {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    align-items: flex-start;
+    width: 100%;
+} 
+
+.fill.degrees {
+    display: flex;
+    justify-content: center;    
+}
