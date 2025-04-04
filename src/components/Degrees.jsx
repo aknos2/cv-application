@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CustomInput from "./CustomInput";
 import Button from "./Button";
 
 export default function DegreesSection() {
@@ -15,15 +16,20 @@ export default function DegreesSection() {
     return (
         <div className="container">
             <h2>Degrees</h2>
+
             <div className="fill degrees">
                 <label htmlFor="degrees-0">Degrees (if any applicable): </label>
-                <Button className="add-btn" onClick={addDegreeRow} aria-label="add more" text="+"/>
+                <Button type="button" className="add-btn" onClick={addDegreeRow} aria-label="add more" text="+"/>
             </div>
 
             {degreeRows.map((id) => (
                 <div key={id} className="fill degrees">
-                    <label htmlFor={`degrees-${id}`}>Degree: </label>
-                    <input type="text" name={`degrees-${id}`} id={`degrees-${id}`} />
+                    <CustomInput
+                        label="Degree:"
+                        type="text"
+                        id={`degrees-${id}`}
+                        name={`degrees-${id}`}
+                    />
                     <Button aria-label="delete" onClick={() => deleteDegreeRow(id)} text="x"/>
                 </div>
             ))}

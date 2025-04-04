@@ -9,6 +9,30 @@ button {
     font-weight: bold;
 }
 
+#close-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    right: 10px;
+    font-size: 1rem;
+}
+
+#add-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    right: 10px;
+    font-size: 1rem;
+}
+
 textarea {
     max-width: 100%;
     width: 100%;
@@ -25,11 +49,13 @@ textarea {
 form {
     display: flex;
     flex-direction: column;
-    max-width: 800px;
+    max-width: 600px;
+    width: 100%;
     margin: 0 auto;
     padding: 2rem;
-    text-align: center;
+    text-align: left;
     gap: 30px;
+    position: relative;
 }
 
 .body-form p {
@@ -48,6 +74,7 @@ form {
 
 .fill {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px; 
     width: 100%; 
@@ -76,4 +103,27 @@ form {
 .fill.degrees {
     display: flex;
     justify-content: center;    
+}
+
+.fill.name {
+    display: flex;
+    flex-direction: row;
+} 
+  
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+}
+  
+input[aria-invalid="true"] {
+    border-color: red;
+}
+
+.saved-data-container h3{
+    text-align: center;
+}
+
+.saved-info.name-section{
+    display: flex;
+    padding-bottom: 5px;
 }
