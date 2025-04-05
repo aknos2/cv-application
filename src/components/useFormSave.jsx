@@ -6,7 +6,7 @@ export function useFormSave(initialData, validateFormFn) {
   const [showForm, setShowForm] = useState(true);
   const [showErrors, setShowErrors] = useState(false);
 
-  const handleSaveButton = (e, formData) => {
+  const handleSaveButton = (e, formData, overrideSaveData = null) => {
     e.preventDefault();
     
     if (!isEditing) {
@@ -14,12 +14,11 @@ export function useFormSave(initialData, validateFormFn) {
 
       // Run the validation function passed to the hook
       const isValid = validateFormFn ? validateFormFn() : true;
-      if (!isValid) {
-        return;
-      }
+      if (!isValid) return;
+      
 
       // We're in "Save" mode - save the data and switch to view mode
-      setSavedData(formData);
+      setSavedData(overrideSaveData ?? formData);
       setShowForm(false);
       setIsEditing(true);
     } else {

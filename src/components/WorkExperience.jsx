@@ -64,7 +64,8 @@ export default function WorkSection() {
                 />
             </div>
 
-            <Button text="Add"/>
+            <Button />
+            <Button text="+" id="add-btn"/>
         </div>
     );
 }

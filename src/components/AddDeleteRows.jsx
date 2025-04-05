@@ -1,7 +1,11 @@
 export function addRow(setRow, rows) {
-    setRow([...rows, crypto.randomUUID()]);
+    const newId = crypto.randomUUID();
+    setRow([...rows, {
+        id: newId,
+        degree: ""
+    }]);
 }
 
-export function deleteRow(setRow, rows, id) {
-    setRow(rows.filter(degreeId => degreeId !== id));
+export function deleteRow(setRow, rows, id, e) {
+    setRow(rows.filter(row => row.id !== id));
 }
