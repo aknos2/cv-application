@@ -131,7 +131,7 @@ input[aria-invalid="true"] {
 }
 
 
-.education-row {
+.education-row, .work-row {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -144,6 +144,7 @@ input[aria-invalid="true"] {
     margin-left: auto;
     width: 100px;
     align-self: center;
+    text-align: center;
 }
 
 .save-btn {

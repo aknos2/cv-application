@@ -1,11 +1,12 @@
-export function addRow(setRow, rows) {
+export function addRow(setRow, rows, newItemTemplate) {
     const newId = crypto.randomUUID();
     setRow([...rows, {
         id: newId,
-        degree: ""
+        ...newItemTemplate
     }]);
 }
 
-export function deleteRow(setRow, rows, id, e) {
+export function deleteRow(e, setRow, rows, id) {
+    e.preventDefault();
     setRow(rows.filter(row => row.id !== id));
 }

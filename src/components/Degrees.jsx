@@ -15,6 +15,7 @@ export default function DegreesSection() {
     } = useFormSave(null);
 
     const onSaveClick = (e) => {
+        e.preventDefault();
         // Filter out empty entries before saving
         const nonEmptyRows = degreeRows.filter(row => row.degree.trim() !== "");
 
@@ -64,13 +65,13 @@ export default function DegreesSection() {
                         value={entry.degree}
                         onChange={(e) => handleInputChange(e, entry.id, "degree")}
                     />
-                    <Button aria-label="delete" onClick={() => deleteRow(setDegreeRows, degreeRows, entry.id)} text="x"/>
+                    <Button aria-label="delete" onClick={(e) => deleteRow(e, setDegreeRows, degreeRows, entry.id)} text="x"/>
                 </div>
             ))}
 
             <div className="fill degrees">
                 <label htmlFor="degrees-add">Degrees (if any applicable): </label>
-                <Button type="button" className="add-btn" onClick={() => addRow(setDegreeRows, degreeRows)} aria-label="add more" text="+"/>
+                <Button type="button" className="add-btn" aria-label="add new degree" onClick={() => addRow(setDegreeRows, degreeRows)} aria-label="add more" text="+"/>
             </div>
 
             <Button onClick={onSaveClick} aria-label="save"/>
