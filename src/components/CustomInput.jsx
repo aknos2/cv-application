@@ -31,10 +31,11 @@ function CustomInput({
           value={value}
           onChange={handleInputChange}
           style={{ width: '100%' }}
+          aria-required="true"
           aria-invalid={showError && error ? true : false}
           placeholder={placeholder}
         />
-        {showError && error && <spam className="error-message">{error}</spam>}
+        {showError && error && <span className="error-message">{error}</span>}
 
     </>
   );

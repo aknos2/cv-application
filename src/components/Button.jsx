@@ -5,7 +5,8 @@ export default function Button({
     type = "submit", 
     ariaLabel = "Save", 
     onClick, 
-    id = ""
+    id = "",
+    className = ""
 }) {
     const buttonStyle = {
         color: color,
@@ -19,6 +20,7 @@ export default function Button({
             aria-label={ariaLabel} 
             onClick={onClick}
             id = {id}
+            className = {className}
         >
             {text}
         </button>

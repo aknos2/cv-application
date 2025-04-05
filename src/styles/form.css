@@ -112,7 +112,7 @@ form {
   
 .error-message {
     color: red;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
   
 input[aria-invalid="true"] {
@@ -123,7 +123,33 @@ input[aria-invalid="true"] {
     text-align: center;
 }
 
-.saved-info.name-section{
+.saved-info {
     display: flex;
-    padding-bottom: 5px;
+    justify-content: center;
+    padding-bottom: 15px;
+}
+
+
+.education-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.delete-btn {
+    margin-left: auto;
+    width: 100px;
+    align-self: center;
+}
+
+.save-btn {
+    width: 100%;
+}
+
+.center-save-button {
+    display: flex;
+    justify-content: center;
 }

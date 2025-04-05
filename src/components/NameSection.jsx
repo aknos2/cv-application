@@ -2,22 +2,19 @@ import { useState } from 'react'
 import '../styles/form.css'
 import Button from './Button'
 import CustomInput from './CustomInput';
+import { useFormSave } from './useFormSave';
 
 export default function NameSection() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [savedData, setSavedData] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
-    const [showForm, setShowForm] = useState(true);
     const [errors, setErrors] = useState({
         firstName: "",
         lastName: "",
         email: "",
         phoneNumber: ""
     });
-    const [showErrors, setShowErrors] = useState(false);
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,42 +70,25 @@ export default function NameSection() {
         return !Object.values(newErrors).some(error => error);
     };
 
-    function handleSaveButton(e) {       
-        e.preventDefault(); 
+    const {
+        savedData,
+        isEditing,
+        showForm,
+        showErrors,
+        handleSaveButton
+    } = useFormSave(null, validateForm);
+
+    const onSaveClick = (e) => {       
+        const formData = {firstName, lastName, email, phoneNumber};
+        handleSaveButton(e, formData);
         
-        if (!isEditing) {
-            setShowErrors(true);
-
-            const isValid = validateForm();
-            if (!isValid) {
-                return;
-            }
-
-            // We're in "Save" mode - save the data and switch to view mode
-            setSavedData({
-                firstName,
-                lastName,
-                email,
-                phoneNumber
-            });
-            setShowForm(false); // Hide form, show saved data
-            setIsEditing(true); // Next button click will be "Edit"
-            setErrors(false);
-        } else {
-            // We're in "Edit" mode - switch back to form view with saved values
-            setShowForm(true); // Show form again
-            setIsEditing(false); // Next button click will be "Save"
-            
-            // Load the saved values into the form fields
-            if (savedData) {
-                setFirstName(savedData.firstName);
-                setLastName(savedData.lastName);
-                setEmail(savedData.email);
-                setPhoneNumber(savedData.phoneNumber);
-            }
+        if (isEditing && savedData) {
+            setFirstName(savedData.firstName);
+            setLastName(savedData.lastName);
+            setEmail(savedData.email);
+            setPhoneNumber(savedData.phoneNumber);
         }
     }
-
 
     return (
         <form className="container">
@@ -186,7 +166,7 @@ export default function NameSection() {
                 </div>
             )
         )}
-            <Button onClick={handleSaveButton} text={isEditing ? "Edit" : "Save"}/>
+            <Button onClick={onSaveClick} text={isEditing ? "Edit" : "Save"}/>
     </form>
     );
 }

@@ -1,17 +1,10 @@
 import { useState } from "react";
 import CustomInput from "./CustomInput";
 import Button from "./Button";
+import { addRow, deleteRow } from "./AddDeleteRows";
 
 export default function DegreesSection() {
     const [degreeRows, setDegreeRows] = useState([]);
-
-    function addDegreeRow() {
-        setDegreeRows([...degreeRows, crypto.randomUUID()]);
-    }
-
-    function deleteDegreeRow(id) {
-        setDegreeRows(degreeRows.filter(degreeId => degreeId !== id));
-    }
 
     return (
         <div className="container">
@@ -19,7 +12,7 @@ export default function DegreesSection() {
 
             <div className="fill degrees">
                 <label htmlFor="degrees-0">Degrees (if any applicable): </label>
-                <Button type="button" className="add-btn" onClick={addDegreeRow} aria-label="add more" text="+"/>
+                <Button type="button" className="add-btn" onClick={() => addRow(setDegreeRows, degreeRows)} aria-label="add more" text="+"/>
             </div>
 
             {degreeRows.map((id) => (
@@ -29,8 +22,9 @@ export default function DegreesSection() {
                         type="text"
                         id={`degrees-${id}`}
                         name={`degrees-${id}`}
+                        aria-required="false"
                     />
-                    <Button aria-label="delete" onClick={() => deleteDegreeRow(id)} text="x"/>
+                    <Button aria-label="delete" onClick={() => deleteRow(setDegreeRows, degreeRows, id)} text="x"/>
                 </div>
             ))}
 
