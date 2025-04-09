@@ -1,0 +1,55 @@
+
+.cv-template {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    gap: 10px;
+    font-size: 1.2em;
+}
+
+.section-titles {
+    display: flex;
+    padding-left: 20px;
+}
+
+.name-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.name-section h1 {
+    text-transform: capitalize;
+}
+
+.education-section, .degree-section, .work-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 200px;
+    height: 100%;
+    gap: 10px;
+}
+
+.education-section-content, .degree-section-content, .work-section-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 20px;
+}
+
+li {
+    list-style-type: square;
+}
+
+.back-btn {
+    position: fixed;
+    right: 22%;
+}

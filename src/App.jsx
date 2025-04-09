@@ -16,7 +16,8 @@ function App() {
   });
 
   const [showCV, setShowCV] = useState(false);
-
+  const [isPreview, setIsPreview] = useState(false);
+  
   const updateFormData = (section, data) => {
     setFormData(prevData => ({
       ...prevData,
@@ -27,13 +28,24 @@ function App() {
   const generateHandleCV = (e) => {
     e.preventDefault();
     setShowCV(true);
+    setIsPreview(false);
+  }
+
+  const handlePreviewCV = () => {
+    setShowCV(true);
+    setIsPreview(true);
+  }
+
+  const handleBackToForm = () => {
+    setShowCV(false);
+    setIsPreview(false);
   }
 
   return (
     <div>
       {!showCV ? (
         <>
-         <Header />
+         <Header onPreviewCV={handlePreviewCV} />
           <div className='body-form'>
             <p>Please fill the form to submit your job application.</p>
             <form onSubmit={generateHandleCV}>
@@ -59,8 +71,15 @@ function App() {
         </>
       ) : (
         <>
+          <Header onPreviewCV={handlePreviewCV} showPreviewButton={false} />
           <CVTemplate data={formData} />
-          <Button onClick={() => setShowCV(false)} text="Back to Form" />
+          {isPreview ? (
+            <div className="preview-buttons">
+              <Button onClick={handleBackToForm} text="Back to Form" className='back-btn'/>
+            </div>
+          ) : (
+            <Button onClick={handleBackToForm} text="Back to Form" className='back-btn'/>
+          )}
         </>
       )}
     

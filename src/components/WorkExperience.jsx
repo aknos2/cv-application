@@ -176,6 +176,7 @@ export default function WorkSection({onSave, initialData}) {
                                 <p><span className='highlight-word'>Main duties performed</span>: </p>
                                 <p>{entry.duties}</p>
                             </div>
+                            <hr />
                         </div>
                     ))}
                     <Button onClick={onSaveClick} text="Edit" className="save-btn"/>

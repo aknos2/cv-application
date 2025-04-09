@@ -1,52 +1,54 @@
 import Header from "./Header";
+import '../styles/CVtemplate.css'
+import { useState } from "react";
 
 export default function CVTemplate({ data }) {
     return (
         <>
-        <Header />
       <div className="cv-template">
-        <h1>Curriculum Vitae</h1>
         
         {data.personalInfo && (
-          <section>
-            <h2>Personal Information</h2>
-            <p>Name: {data.personalInfo.firstName} {data.personalInfo.lastName}</p>
-            <p>Email: {data.personalInfo.email}</p>
-            <p>Phone: {data.personalInfo.phoneNumber}</p>
+          <section className="name-section">
+            <h1> {data.personalInfo.firstName} {data.personalInfo.lastName}</h1>
+            <p>{data.personalInfo.email}</p>
+            <p>{data.personalInfo.phoneNumber}</p>
           </section>
         )}
         
         {data.education && (
-          <section>
-            <h2>Education</h2>
+          <section className="education-section">
+            <h2 className="section-titles">Education</h2>
+            <hr />
             {Array.isArray(data.education) && data.education.map(edu => (
-              <div key={edu.id}>
-                <h3>{edu.schoolName}</h3>
-                <p>Field of Study: {edu.studyField}</p>
-                <p>From: {edu.dateFrom} To: {edu.dateTo}</p>
+              <div key={edu.id} className="education-section-content">
+                <h2>{edu.schoolName}</h2>
+                <p>{edu.studyField}</p>
+                <p>{edu.dateFrom} / {edu.dateTo}</p>
               </div>
             ))}
           </section>
         )}
         
         {data.degrees && (
-          <section>
-            <h2>Degrees</h2>
+          <section className="degree-section">
+            <h2 className="section-titles">Degrees</h2>
+            <hr />
             {Array.isArray(data.degrees) && data.degrees.map(deg => (
-              <div key={deg.id}>
-                <p>{deg.degree}</p>
+              <div key={deg.id} className="degree-section-content">
+                <li>{deg.degree}</li>
               </div>
             ))}
           </section>
         )}
         
         {data.workExperience && (
-          <section>
-            <h2>Work Experience</h2>
+          <section className="work-section">
+            <h2 className="section-titles">Work Experience</h2>
+            <hr />
             {Array.isArray(data.workExperience) && data.workExperience.map(job => (
-              <div key={job.id}>
-                <h3>{job.positionTitle} at {job.companyName}</h3>
-                <p>From: {job.dateFrom} To: {job.dateTo}</p>
+              <div key={job.id} className="work-section-content">
+                <h2>{job.positionTitle} at {job.companyName}</h2>
+                <p>{job.dateFrom} / {job.dateTo}</p>
                 <p>Duties: {job.duties}</p>
               </div>
             ))}

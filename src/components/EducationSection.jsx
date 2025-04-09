@@ -166,10 +166,11 @@ export default function EducationSection({onSave, initialData}) {
                                 <p><span className='highlight-word'>School Name</span>: {entry.schoolName}</p>
                                 <p><span className='highlight-word'>Field</span>: {entry.studyField}</p>
                             </div>
-                            <div>
+                            <div className="from-to-wrap">
                                 <p><span className='highlight-word'>From</span>: {entry.dateFrom}</p>
                                 <p><span className='highlight-word'>To</span>: {entry.dateTo}</p>
                             </div>
+                            <hr />
                         </div>
                     ))}
                     <Button onClick={onSaveClick} text="Edit" className="save-btn"/>

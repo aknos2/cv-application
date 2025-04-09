@@ -6,11 +6,12 @@ export default function Button({
     ariaLabel = "Save", 
     onClick, 
     id = "",
-    className = ""
+    className = "",
+    tabIndex
 }) {
     const buttonStyle = {
         color: color,
-        "background-color": backgroundColor
+        backgroundColor: backgroundColor  
     };
 
     return (
@@ -19,8 +20,9 @@ export default function Button({
             type={type} 
             aria-label={ariaLabel} 
             onClick={onClick}
-            id = {id}
-            className = {className}
+            id={id}
+            className={className}
+            tabIndex={tabIndex}  
         >
             {text}
         </button>

@@ -27,19 +27,39 @@ body, h1, h2, h3, h4, h5, h6, p {
   padding: 0;
 }
 
+p, h1, h2, h3 {
+  filter: brightness(.9) contrast(1.2);
+}
+
+body {
+  background-color: #fff;
+  color: #000;
+  padding-top: 20px;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-theme header {
+  background-color: var(--header-background-color-darkmode);
+}
+
 header {
   background-color: var(--header-background-color);
   min-width: 100%;
   max-height: 200px;
+
 }
 
 .header-wrap {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   text-align: center;
   align-items: center;
-  padding: 0 80px;
-  margin-top: 30px;
+  padding: 10px 80px;
 }
 
 .header-links {
@@ -47,6 +67,8 @@ header {
   justify-content: space-around;
   gap: 5px;
   width: 400px;
+  text-align: center;
+  align-items: center;
 }
 
 a {
@@ -84,13 +106,18 @@ button:active {
   transform: scale(0.96);
 }
 
-button:hover {
+button:hover {    
   filter: brightness(1.1);
 }
 
-button:focus,
-button:focus-visible {
-  outline: none !important;
+button:focus {    
+  outline: 1px solid rgb(20, 71, 191);
+  box-shadow: rgb(20, 71, 191, 0.20) 0px 14px 28px, rgb(20, 71, 191, 0.22) 0px 10px 10px;
+}
+
+body.dark-theme button:focus {
+  outline: 2px solid white;
+  box-shadow: rgba(255, 253, 253, 0.35) 0px 5px 10px;
 }
 
 textarea {
