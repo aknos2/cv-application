@@ -1,20 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../styles/form.css'
 import Button from './Button'
 import CustomInput from './CustomInput';
 import { useFormSave } from './useFormSave';
 
-export default function NameSection() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+export default function NameSection({onSave, initialData}) {
+    const [firstName, setFirstName] = useState(initialData?.firstName || "");
+    const [lastName, setLastName] = useState(initialData?.lastName || "");
+    const [email, setEmail] = useState(initialData?.email || "");
+    const [phoneNumber, setPhoneNumber] = useState(initialData?.phoneNumber || "");
     const [errors, setErrors] = useState({
         firstName: "",
         lastName: "",
         email: "",
         phoneNumber: ""
     });
+
+    useEffect(() => {
+        if (initialData) {
+          setFirstName(initialData.firstName || "");
+          setLastName(initialData.lastName || "");
+          setEmail(initialData.email || "");
+          setPhoneNumber(initialData.phoneNumber || "");
+        }
+      }, [initialData]);
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -78,20 +87,29 @@ export default function NameSection() {
         handleSaveButton
     } = useFormSave(null, validateForm);
 
+    const [isSaved, setIsSaved] = useState(false);
+
     const onSaveClick = (e) => {       
         const formData = {firstName, lastName, email, phoneNumber};
         handleSaveButton(e, formData);
+
+        if (validateForm()) {
+            onSave(formData);
+
+            setIsSaved(true);
+        }
         
         if (isEditing && savedData) {
             setFirstName(savedData.firstName);
             setLastName(savedData.lastName);
             setEmail(savedData.email);
             setPhoneNumber(savedData.phoneNumber);
+            setIsSaved(false);
         }
     }
 
     return (
-        <form className="container">
+        <form className={`container ${isSaved ? "saved" : ""}`}>
             {showForm ? (
                 <>
                 <div className="fill name">
@@ -144,7 +162,7 @@ export default function NameSection() {
                             setPhoneNumber(value);
                         }
                     }}
-                    placeholder="123-4567-8901"
+                    placeholder="12345678901"
                     required
                 />
             </div>
@@ -155,12 +173,12 @@ export default function NameSection() {
                     <h3>Saved Information</h3>
                     <div className="saved-info name-section">
                         <div>
-                            <p>First Name: {savedData.firstName}</p>
-                            <p>Last Name: {savedData.lastName}</p>
+                            <p><span className='highlight-word'>First Name</span>: {savedData.firstName}</p>
+                            <p><span className='highlight-word'>Last Name</span>:  {savedData.lastName}</p>
                         </div>
                         <div>
-                            <p>Email: {savedData.email}</p>
-                            <p>Phone: {savedData.phoneNumber}</p>
+                            <p><span className='highlight-word'>Email</span>: {savedData.email}</p>
+                            <p><span className='highlight-word'>Phone</span>: {savedData.phoneNumber}</p>
                         </div>
                     </div>
                 </div>

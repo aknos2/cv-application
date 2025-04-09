@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInput from "./CustomInput";
 import Button from "./Button";
 import { useFormSave } from "./useFormSave";
 import { addRow } from "./AddDeleteRows";
+import { DeleteConfirmation, useDeleteConfirmation } from "./DeleteConfirmationUtils";
 
-export default function WorkSection() {
-    const [workEntries, setWorkEntries] = useState([
+export default function WorkSection({onSave, initialData}) {
+    const [workEntries, setWorkEntries] = useState(
+        initialData || [
         {
             id: crypto.randomUUID(),
             companyName: "",
@@ -16,7 +18,21 @@ export default function WorkSection() {
         }
     ])
 
+    useEffect(() => {
+        if (initialData && initialData.length > 0) {
+          setWorkEntries(initialData);
+        }
+      }, [initialData]);
+
     const [errors, setErrors] = useState({});
+
+    const {
+        showDeleteConfirm,
+        entryToDelete,
+        showDeleteConfirmation,
+        cancelDelete,
+        resetDeleteState
+    } = useDeleteConfirmation();
 
     const validateCompanyName = (companyName) => {
         const companyNameRegex = /^[A-Za-z0-9&.,''()\-\s]{2,100}$/;
@@ -24,7 +40,7 @@ export default function WorkSection() {
     }
 
     const validatePositionTitle = (positionTitle) => {
-        const positionTitleRegex = /^[a-zA-Z]{2,20}$/;
+        const positionTitleRegex = /^[A-Za-z0-9&.'\-()\s]{2,100}$/;
         return positionTitleRegex.test(positionTitle);
     }
 
@@ -85,14 +101,23 @@ export default function WorkSection() {
             handleSaveButton
         } = useFormSave(null, validateForm);
 
+    const [isSaved, setIsSaved] = useState(false);
+
     
     const onSaveClick = (e) => {       
         e.preventDefault();
         handleSaveButton(e, workEntries);
+
+        if (validateForm()) {
+            // Call the onSave prop to update parent component
+            onSave(workEntries);
+            setIsSaved(true);
+          }
         
         // If we're switching from edit mode to view mode, load saved data
         if (isEditing && savedData) {
             setWorkEntries(savedData);
+            setIsSaved(false);
         }
     };
 
@@ -116,30 +141,40 @@ export default function WorkSection() {
     };
 
     const handleDeleteRow = (id, e) => {
-        e.preventDefault(); 
-        if (workEntries.length > 1) {
-            setWorkEntries(prevEntries => prevEntries.filter(entry => entry.id !== id));
+        showDeleteConfirmation(id, e);
+    }
+
+    const confirmDelete = (e) => {
+        if (e) {
+            e.preventDefault();
         }
+
+        if ( workEntries.length > 1 && entryToDelete) {
+            setWorkEntries(workEntries.filter(entry => entry.id !== entryToDelete))
+        }
+
+        resetDeleteState();
     }
 
     if (!showForm && savedData) {
         return (
-            <form className="container">
+            <form className={`container ${isSaved ? 'saved' : ''}`}>
                 <h2>Work Experience</h2>
                 <div className="saved-data-container">
                     <h3>Saved Information</h3>
                     {Array.isArray(savedData) && savedData.map((entry) => (
                         <div key={entry.id} className="saved-info work-section">
-                            <div>
-                                <p>Company Name: {entry.companyName}</p>
-                                <p>Position: {entry.positionTitle}</p>
+                            <div className="company-position-wrap">
+                                <p><span className='highlight-word'>Company Name</span>: {entry.companyName}</p>
+                                <p><span className='highlight-word'>Position</span>: {entry.positionTitle}</p>
                             </div>
-                            <div>
-                                <p>From: {entry.dateFrom}</p>
-                                <p>To: {entry.dateTo}</p>
+                            <div className="from-to-wrap">
+                                <p><span className='highlight-word'>From</span>: {entry.dateFrom}</p>
+                                <p><span className='highlight-word'>To</span>: {entry.dateTo}</p>
                             </div>
-                            <div>
-                                <p>Main duties performed: {entry.duties}</p>
+                            <div className="saved-duties-wrap">
+                                <p><span className='highlight-word'>Main duties performed</span>: </p>
+                                <p>{entry.duties}</p>
                             </div>
                         </div>
                     ))}
@@ -152,6 +187,14 @@ export default function WorkSection() {
     return (
         <form className="container" onSubmit={(e) => e.preventDefault()}>
             <h2>Work Experience</h2>
+
+            {showDeleteConfirm && 
+                <DeleteConfirmation 
+                     onConfirm={confirmDelete}
+                    onCancel={cancelDelete}
+                />
+            }
+
             {workEntries.map((entry) => (
                 <div key={entry.id} className="work-row">
                     <div className="fill company-name">
@@ -229,7 +272,7 @@ export default function WorkSection() {
             ))}
                 
             <div className="button-group">
-                <Button text="+" id="add-btn" aria-label="add new work experience" onClick={handleAddWork} />
+                <Button text="+" className="add-btn" aria-label="add new work experience" onClick={handleAddWork} />
                 <div className="center-save-button">
                     <Button onClick={onSaveClick} ariaLabel="save" className="save-btn" text={isEditing ? "Edit" : "Save"} />
                 </div>

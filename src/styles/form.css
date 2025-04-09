@@ -1,12 +1,21 @@
 :root {
     --button-background-color: rgb(87, 133, 198);
     --button-font-color: white;
+    --delete-confirmation-container-background: rgb(87, 133, 198);
+    --transparent-background: rgba(0, 0, 0, 0.4);
+    --button-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    --form-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    --add-button-color: #3b78db;
+    --delete-button-color: rgb(225, 44, 44, 0.9);
+    --generateCV-button: #4CAF50;
 }
 
 button {
-    margin-top: 5px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    box-shadow: var(--form-box-shadow);
+}
+
+.highlight-word {
+    font-weight: 600;
 }
 
 #close-btn {
@@ -21,7 +30,7 @@ button {
     font-size: 1rem;
 }
 
-#add-btn {
+.add-btn {
     position: absolute;
     display: flex;
     align-items: center;
@@ -31,6 +40,32 @@ button {
     top: 0;
     right: 10px;
     font-size: 1rem;
+    background-color: var(--add-button-color) !important;
+}
+
+.generateCV-btn {
+    background-color: var(--generateCV-button) !important;
+}
+
+.degrees-add-btn {
+    background-color: var(--add-button-color) !important;
+}
+
+.delete-btn {
+    margin-left: auto;
+    width: 100px;
+    align-self: center;
+    text-align: center;
+    background-color: var(--delete-button-color) !important;
+}
+
+.save-btn {
+    width: 100%;
+}
+
+.center-save-button {
+    display: flex;
+    justify-content: center;
 }
 
 textarea {
@@ -58,7 +93,7 @@ form {
     position: relative;
 }
 
-.body-form p {
+.body-form > p {
     padding: 15px;
     margin-bottom: -30px;
 }
@@ -71,6 +106,19 @@ form {
     border-radius: 5px;
     padding: 30px;
     position: relative;
+    box-shadow: var(--form-box-shadow);
+    transition: border-color 0.3s ease;
+}
+
+.container.saved {
+    border-color: #4CAF50; /* Green border to indicate saved state */
+    animation: flashSaved 1s;
+}
+  
+@keyframes flashSaved {
+    0% { border-color: #ccc; }
+    50% { border-color: #4CAF50; }
+    100% { border-color: #4CAF50; }
 }
 
 .fill {
@@ -106,6 +154,15 @@ form {
     justify-content: center;    
 }
 
+.fill.degrees > button {
+    width: 40px;
+    height: 30px;
+    font-size: 0.9em;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
 .fill.name {
     display: flex;
     flex-direction: row;
@@ -122,14 +179,36 @@ input[aria-invalid="true"] {
 
 .saved-data-container h3{
     text-align: center;
+    background-color: rgba(121, 206, 113, 0.8);
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 5px;
 }
 
 .saved-info {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     padding-bottom: 15px;
 }
 
+.saved-info.work-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.company-position-wrap, .from-to-wrap {
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.saved-duties-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 
 .education-row, .work-row {
     display: flex;
@@ -140,18 +219,63 @@ input[aria-invalid="true"] {
     margin-bottom: 1rem;
 }
 
-.delete-btn {
-    margin-left: auto;
-    width: 100px;
-    align-self: center;
-    text-align: center;
-}
-
-.save-btn {
-    width: 100%;
-}
-
-.center-save-button {
+.delete-confirmation-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--transparent-background);
     display: flex;
     justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.delete-confirmation-container {
+    background-color: var(--delete-confirmation-container-background);
+    width: fit-content;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    box-shadow: var(--form-box-shadow);
+} 
+
+.delete-confirmation-content {
+    background-color: rgb(217, 205, 145);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: var(--button-box-shadow);
+    max-width: 100%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.delete-confirmation-content > p {
+    padding: 15px;
+    font-size: 1.3em;
+}
+
+.delete-confirmation-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cancel-btn {
+    background-color: #6c757d !important;
+    box-shadow: var(--button-box-shadow);
+    border: 1px solid black;
+}
+
+.confirm-delete-btn {
+    background-color: #dc3545 !important;
+    box-shadow: var(--button-box-shadow);
+    border: 1px solid black;
 }

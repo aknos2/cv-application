@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInput from "./CustomInput";
 import Button from "./Button";
 import { useFormSave } from "./useFormSave";
+import { DeleteConfirmation, useDeleteConfirmation } from "./DeleteConfirmationUtils";
 
-export default function EducationSection() {
+
+export default function EducationSection({onSave, initialData}) {
     // State for the form fields
-    const [educationEntries, setEducationEntries] = useState([
+    const [educationEntries, setEducationEntries] = useState(
+        initialData || [
         {
             id: crypto.randomUUID(),
             schoolName: "",
@@ -14,9 +17,25 @@ export default function EducationSection() {
             dateTo: ""
         }
     ]);
+
+    useEffect(() => {
+        if (initialData && initialData.length > 0) {
+          setEducationEntries(initialData);
+        }
+      }, [initialData]);
     
     // Error states for each entry
     const [errors, setErrors] = useState({});
+
+    const { 
+        showDeleteConfirm, 
+        entryToDelete, 
+        showDeleteConfirmation, 
+        cancelDelete, 
+        resetDeleteState 
+      } = useDeleteConfirmation();
+
+    const [isSaved, setIsSaved] = useState(false);
  
     const validateSchoolName = (schoolName) => {
         const schoolNameRegex = /^[A-Za-z\s'.-]{2,100}$/;
@@ -24,7 +43,7 @@ export default function EducationSection() {
     }
 
     const validateStudyField = (studyField) => {
-        const studyFieldRegex = /^[a-zA-Z]{2,20}$/;
+        const studyFieldRegex = /^[A-Za-z0-9&.'\-()\s]{2,100}$/;
         return studyFieldRegex.test(studyField);
     }
 
@@ -81,11 +100,19 @@ export default function EducationSection() {
     } = useFormSave(null, validateForm);
     
     const onSaveClick = (e) => {       
-        handleSaveButton(e, educationEntries);
+        if (validateForm()) {
+            // Call the onSave prop to update parent component
+            onSave(educationEntries);
+
+            setIsSaved(true);
+          }
         
+        handleSaveButton(e, educationEntries);
+
         // If we're switching from edit mode to view mode, load saved data
         if (isEditing && savedData) {
             setEducationEntries(savedData);
+            setIsSaved(false)
         }
     };
 
@@ -111,31 +138,37 @@ export default function EducationSection() {
     };
 
     const deleteRow = (id, e) => {
+        showDeleteConfirmation(id, e);
+    };
+
+    const confirmDelete = (e) => {
         if (e) {
             e.preventDefault(); 
         }
 
-        if (educationEntries.length > 1) {
-            setEducationEntries(educationEntries.filter(entry => entry.id !== id));
+        if (educationEntries.length > 1 && entryToDelete) {
+            setEducationEntries(educationEntries.filter(entry => entry.id !== entryToDelete));
         }
-    };
+
+        resetDeleteState();
+    }
 
     // If we're viewing saved data and we have data to show
     if (!showForm && savedData) {
         return (
-            <form className="container">
+            <form className={`container ${isSaved ? 'saved' : ''}`}>
                 <h2>Education</h2>
                 <div className="saved-data-container">
                     <h3>Saved Information</h3>
                     {Array.isArray(savedData) && savedData.map((entry) => (
                         <div key={entry.id} className="saved-info education-section">
                             <div>
-                                <p>School Name: {entry.schoolName}</p>
-                                <p>Field: {entry.studyField}</p>
+                                <p><span className='highlight-word'>School Name</span>: {entry.schoolName}</p>
+                                <p><span className='highlight-word'>Field</span>: {entry.studyField}</p>
                             </div>
                             <div>
-                                <p>From: {entry.dateFrom}</p>
-                                <p>To: {entry.dateTo}</p>
+                                <p><span className='highlight-word'>From</span>: {entry.dateFrom}</p>
+                                <p><span className='highlight-word'>To</span>: {entry.dateTo}</p>
                             </div>
                         </div>
                     ))}
@@ -149,6 +182,15 @@ export default function EducationSection() {
     return (
         <form className="container" onSubmit={(e) => e.preventDefault()}>
             <h2>Education</h2>
+
+            {/* Delete confirmation dialog */}
+            {showDeleteConfirm && 
+                <DeleteConfirmation 
+                    onConfirm={confirmDelete} 
+                    onCancel={cancelDelete} 
+                />
+            }
+
             {educationEntries.map((entry) => (
                 <div key={entry.id} className="education-row">
                     <div className="fill school-name">
@@ -206,7 +248,7 @@ export default function EducationSection() {
                         <Button 
                             text="Delete" 
                             id={`delete-btn-${entry.id}`} 
-                            onClick={() => deleteRow(entry.id)}
+                            onClick={(e) => deleteRow(entry.id, e)}
                             className="delete-btn"
                         />
                     )}
@@ -214,7 +256,7 @@ export default function EducationSection() {
             ))}
             
             <div className="button-group">
-                <Button text="+" id="add-btn" onClick={addRow} />
+                <Button text="+" className="add-btn" onClick={addRow} />
                 <div className="center-save-button">
                     <Button onClick={onSaveClick} className="save-btn" text={isEditing ? "Edit" : "Save"} />
                 </div>

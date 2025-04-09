@@ -23,7 +23,7 @@ function CustomInput({
 
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}><span className='highlight-word'>{label}</span></label>
         <input
           type={type}
           id={id}
