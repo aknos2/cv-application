@@ -4,6 +4,7 @@ import Button from "./Button";
 import { useFormSave } from "./useFormSave";
 import { DeleteConfirmation } from "./DeleteConfirmationUtils";
 import { useDeleteConfirmation } from "./useDeleteConfirmation";
+import { generateRandomId } from "./generateRandomId";
 
 
 export default function EducationSection({onSave, initialData}) {
@@ -11,7 +12,7 @@ export default function EducationSection({onSave, initialData}) {
     const [educationEntries, setEducationEntries] = useState(
         initialData || [
         {
-            id: crypto.randomUUID(),
+            id: generateRandomId(),
             schoolName: "",
             studyField: "",
             dateFrom: "",
@@ -129,7 +130,7 @@ export default function EducationSection({onSave, initialData}) {
         e.preventDefault();
 
         const newEntry = {
-            id: crypto.randomUUID(),
+            id: generateRandomId(),
             schoolName: "",
             studyField: "",
             dateFrom: "",
@@ -231,6 +232,7 @@ export default function EducationSection({onSave, initialData}) {
                             onChange={(e) => handleInputChange(e, entry.id, "dateFrom")}
                             error={errors[entry.id]?.dateFrom || ""}
                             showError={showErrors}
+                            placeholder="2025/07 or July 2025"
                             required
                         />
                         <CustomInput
@@ -242,6 +244,7 @@ export default function EducationSection({onSave, initialData}) {
                             onChange={(e) => handleInputChange(e, entry.id, "dateTo")}
                             error={errors[entry.id]?.dateTo || ""}
                             showError={showErrors}
+                            placeholder="2025/07 or July 2025"
                             required
                         />
                     </div>

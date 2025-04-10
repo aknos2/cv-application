@@ -5,12 +5,13 @@ import { useFormSave } from "./useFormSave";
 import { addRow } from "./AddDeleteRows";
 import { DeleteConfirmation } from "./DeleteConfirmationUtils";
 import { useDeleteConfirmation } from "./useDeleteConfirmation";
+import { generateRandomId } from "./generateRandomId";
 
 export default function WorkSection({onSave, initialData}) {
     const [workEntries, setWorkEntries] = useState(
         initialData || [
         {
-            id: crypto.randomUUID(),
+            id: generateRandomId(),
             companyName: "",
             positionTitle: "",
             dateFrom: "",

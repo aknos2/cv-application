@@ -44,13 +44,13 @@ export default function CVTemplate({ data }) {
         
         {data.workExperience && (
           <section className="work-section">
-            <h2 className="section-titles">Work Experience</h2>
+            <h2 className="section-titles">Experience</h2>
             <hr />
             {Array.isArray(data.workExperience) && data.workExperience.map(job => (
               <div key={job.id} className="work-section-content">
-                <h2>{job.positionTitle} at {job.companyName}</h2>
+                <h2 className="company-name-wrapper">{job.positionTitle}<spam id="company-name-title">at {job.companyName}</spam></h2>
                 <p>{job.dateFrom} / {job.dateTo}</p>
-                <p>Duties: {job.duties}</p>
+                <p>{job.duties}</p>
               </div>
             ))}
           </section>

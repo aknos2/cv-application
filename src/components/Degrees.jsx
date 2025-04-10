@@ -8,7 +8,7 @@ import { useDeleteConfirmation } from "./useDeleteConfirmation";
 
 export default function DegreesSection({onSave, initialData}) {
     const [degreeRows, setDegreeRows] = useState(
-        initialData || [{ id: crypto.randomUUID(), degree: "" }]
+        initialData || [{ id: Date.now().toString() + Math.random().toString(36).substring(2), degree: "" }]
     );
 
     useEffect(() => {
@@ -103,7 +103,7 @@ export default function DegreesSection({onSave, initialData}) {
 
     return (
         <div className={`container ${isSaved ? "saved" : ""}`}>
-            <h2>Degrees</h2>
+            <h2 className="degree-title-wrapper">Degrees <spam id="degree-title-spam">(if applicable)</spam></h2>
 
             {showDeleteConfirm && 
                 <DeleteConfirmation 
@@ -123,20 +123,17 @@ export default function DegreesSection({onSave, initialData}) {
                         value={entry.degree}
                         onChange={(e) => handleInputChange(e, entry.id, "degree")}
                     />
+                    {degreeRows.length > 1 ? 
                     <Button 
                         aria-label="delete" 
                         onClick={(e) => handleDeleteRow(entry.id, e)} 
                         text="x"
                         className="delete-btn"
-                    />
+                    /> : ""}
+                    
                 </div>
             ))}
-
-            <div className="fill degrees">
-                <div>Degrees (if any applicable): </div>
-                <Button type="button" className="degrees-add-btn" aria-label="add new degree" onClick={() => addRow(setDegreeRows, degreeRows)} text="+"/>
-            </div>
-
+            <Button type="button" className="add-btn" aria-label="add new degree" onClick={() => addRow(setDegreeRows, degreeRows)} text="+"/>
             <Button onClick={onSaveClick} aria-label="save"/>
         </div>
     );

@@ -1,5 +1,7 @@
+import { generateRandomId } from "./generateRandomId";
+
 export function addRow(setRow, rows, newItemTemplate) {
-    const newId = crypto.randomUUID();
+    const newId = generateRandomId();
     setRow([...rows, {
         id: newId,
         ...newItemTemplate
