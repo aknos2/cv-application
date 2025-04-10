@@ -3,11 +3,12 @@ import CustomInput from "./CustomInput";
 import Button from "./Button";
 import { addRow} from "./AddDeleteRows";
 import { useFormSave } from "./useFormSave";
-import { useDeleteConfirmation, DeleteConfirmation } from "./DeleteConfirmationUtils";
+import { DeleteConfirmation } from "./DeleteConfirmationUtils";
+import { useDeleteConfirmation } from "./useDeleteConfirmation";
 
 export default function DegreesSection({onSave, initialData}) {
     const [degreeRows, setDegreeRows] = useState(
-        initialData || [{ degree: "" }]
+        initialData || [{ id: crypto.randomUUID(), degree: "" }]
     );
 
     useEffect(() => {
@@ -132,7 +133,7 @@ export default function DegreesSection({onSave, initialData}) {
             ))}
 
             <div className="fill degrees">
-                <label htmlFor="degrees-add">Degrees (if any applicable): </label>
+                <div>Degrees (if any applicable): </div>
                 <Button type="button" className="degrees-add-btn" aria-label="add new degree" onClick={() => addRow(setDegreeRows, degreeRows)} text="+"/>
             </div>
 

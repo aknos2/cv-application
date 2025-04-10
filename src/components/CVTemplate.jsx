@@ -1,6 +1,5 @@
 import Header from "./Header";
 import '../styles/CVtemplate.css'
-import { useState } from "react";
 
 export default function CVTemplate({ data }) {
     return (
@@ -35,7 +34,9 @@ export default function CVTemplate({ data }) {
             <hr />
             {Array.isArray(data.degrees) && data.degrees.map(deg => (
               <div key={deg.id} className="degree-section-content">
-                <li>{deg.degree}</li>
+                <ul>
+                  <li>{deg.degree}</li>
+                </ul>
               </div>
             ))}
           </section>

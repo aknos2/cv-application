@@ -1,13 +1,14 @@
 function CustomInput({ 
   label, 
   type = "text", 
-  value, 
+  value = "", 
   onChange, 
   id, 
   name, 
   placeholder, 
   error, 
   showError = false,
+  autocomplete 
 }) {
   const handleInputChange = (e) => {
     const newValue = e.target.value;
@@ -34,6 +35,7 @@ function CustomInput({
           aria-required="true"
           aria-invalid={showError && error ? true : false}
           placeholder={placeholder}
+          autoComplete={autocomplete}
         />
         {showError && error && <span className="error-message">{error}</span>}
 

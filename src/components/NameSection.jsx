@@ -109,7 +109,7 @@ export default function NameSection({onSave, initialData}) {
     }
 
     return (
-        <form className={`container ${isSaved ? "saved" : ""}`}>
+        <div className={`container ${isSaved ? "saved" : ""}`}>
             {showForm ? (
                 <>
                 <div className="fill name">
@@ -121,7 +121,7 @@ export default function NameSection({onSave, initialData}) {
                     onChange={(e) => setFirstName(e.target.value)}
                     error={errors.firstName}
                     showError={showErrors}
-                    required
+                    autocomplete="given-name"
                 />
                 <CustomInput 
                     label="Last Name:"
@@ -131,10 +131,9 @@ export default function NameSection({onSave, initialData}) {
                     onChange={(e) => setLastName(e.target.value)}
                     error={errors.lastName}
                     showError={showErrors}
-                    required
                 />
             </div>
-            <div className="fill password">
+            <div className="fill email">
                 <CustomInput
                     label="Email: "
                     type="email"
@@ -144,6 +143,7 @@ export default function NameSection({onSave, initialData}) {
                     onChange={(e) => setEmail(e.target.value)}
                     error={errors.email}
                     showError={showErrors}
+                    autocomplete="off"
                 />
             </div>
             <div className="fill phone-number">
@@ -185,6 +185,6 @@ export default function NameSection({onSave, initialData}) {
             )
         )}
             <Button onClick={onSaveClick} text={isEditing ? "Edit" : "Save"}/>
-    </form>
+    </div>
     );
 }

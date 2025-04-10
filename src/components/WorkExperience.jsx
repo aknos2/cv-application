@@ -3,7 +3,8 @@ import CustomInput from "./CustomInput";
 import Button from "./Button";
 import { useFormSave } from "./useFormSave";
 import { addRow } from "./AddDeleteRows";
-import { DeleteConfirmation, useDeleteConfirmation } from "./DeleteConfirmationUtils";
+import { DeleteConfirmation } from "./DeleteConfirmationUtils";
+import { useDeleteConfirmation } from "./useDeleteConfirmation";
 
 export default function WorkSection({onSave, initialData}) {
     const [workEntries, setWorkEntries] = useState(
@@ -158,7 +159,7 @@ export default function WorkSection({onSave, initialData}) {
 
     if (!showForm && savedData) {
         return (
-            <form className={`container ${isSaved ? 'saved' : ''}`}>
+            <div className={`container ${isSaved ? 'saved' : ''}`}>
                 <h2>Work Experience</h2>
                 <div className="saved-data-container">
                     <h3>Saved Information</h3>
@@ -181,12 +182,12 @@ export default function WorkSection({onSave, initialData}) {
                     ))}
                     <Button onClick={onSaveClick} text="Edit" className="save-btn"/>
                 </div>
-            </form>
+            </div>
         )
     }
 
     return (
-        <form className="container" onSubmit={(e) => e.preventDefault()}>
+        <div className="container" onSubmit={(e) => e.preventDefault()}>
             <h2>Work Experience</h2>
 
             {showDeleteConfirm && 
@@ -278,6 +279,6 @@ export default function WorkSection({onSave, initialData}) {
                     <Button onClick={onSaveClick} ariaLabel="save" className="save-btn" text={isEditing ? "Edit" : "Save"} />
                 </div>
             </div>
-        </form>
+        </div>
     );
 }
