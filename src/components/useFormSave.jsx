@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useFormSave(initialData, validateFormFn) {
   const [savedData, setSavedData] = useState(null);
@@ -8,14 +8,13 @@ export function useFormSave(initialData, validateFormFn) {
 
   const handleSaveButton = (e, formData, overrideSaveData = null) => {
     e.preventDefault();
-    
+
     if (!isEditing) {
       setShowErrors(true);
 
       // Run the validation function passed to the hook
       const isValid = validateFormFn ? validateFormFn() : true;
       if (!isValid) return;
-      
 
       // We're in "Save" mode - save the data and switch to view mode
       setSavedData(overrideSaveData ?? formData);
@@ -34,6 +33,6 @@ export function useFormSave(initialData, validateFormFn) {
     showForm,
     showErrors,
     setShowErrors,
-    handleSaveButton
+    handleSaveButton,
   };
 }

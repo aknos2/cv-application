@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useDeleteConfirmation() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -24,6 +24,6 @@ export function useDeleteConfirmation() {
     resetDeleteState: () => {
       setShowDeleteConfirm(false);
       setEntryToDelete(null);
-    }
+    },
   };
 }
